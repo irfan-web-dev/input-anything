@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Your Data</title>
+  </head>
+  <style>
+    main {
+      padding: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .div1 input {
+      padding: 10px;
+      border: 1px solid #01402f;
+      border-radius: 5px;
+      outline: none;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      width: 80%;
+    }
+
+    .div1 button {
+      padding: 7px;
+      border-radius: 5px;
+      border: 1px solid #01402f;
+      margin-left: 10px;
+      cursor: pointer;
+      background-color: #05936e;
+      color: white;
+      font-size: large;
+      font-weight: 600;
+    }
+
+    .div1 button:hover {
+      background-color: #45ac90;
+    }
+
+    .div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .wrapper {
+      background-color: #eee;
+      padding: 15px;
+      height: 150px;
+      width: 300px;
+      font-weight: 600;
+      font-style: oblique;
+      border-radius: 6px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .wrapper h4 {
+      margin: 8px;
+    }
+
+    .wrapper input {
+      padding: 6px;
+      margin-left: 20px;
+      width: 80%;
+      border: 1px solid #01402f;
+      border-radius: 5px;
+      outline: none;
+      margin-top: 8px;
+    }
+
+    .wrapper button {
+      outline: none;
+      cursor: pointer;
+      float: right;
+      margin-top: 15px;
+      margin-right: 25px;
+      background-color: #05936e;
+      border: 1px solid #05936e;
+      padding: 6px;
+      border-radius: 5px;
+      color: rgb(251, 231, 231);
+      font-weight: 600;
+    }
+
+    .wrapper button:hover {
+      background-color: #45ac90;
+    }
+
+    li {
+      margin: 10px 15px 10px 0;
+    }
+  </style>
+
+  <body>
+    <main>
+      <form class="div" id="loginform">
+        <div class="wrapper">
+          <h4>Enter Your Name and password:</h4>
+          <input id="user1" type="text" placeholder="Enter your Name" />
+          <input
+            id="current-Password"
+            type="password"
+            placeholder="Enter your password"
+          />
+          <button id="go">GO</button>
+        </div>
+      </form>
+
+      <form id="todoform" class="div1">
+        <h1 id="userInput"></h1>
+        <h4>Enter the name of games:</h4>
+        <div>
+          <input
+            id="user2"
+            type="text"
+            placeholder="Enter the names of games"
+          />
+          <button>Create</button>
+          <ul id="task-list"></ul>
+        </div>
+      </form>
+    </main>
+
+    <script>
+      //login form
+      let user1$ = document.getElementById("user1");
+      let userPassword$ = document.getElementById("current-Password");
+      const loginform$ = document.getElementById("loginform");
+      const go$ = document.getElementById("go");
+
+      //todo form
+      const todoform$ = document.getElementById("todoform");
+      let user2$ = document.getElementById("user2");
+      let userInput$ = document.getElementById("userInput");
+      let taskList = document.getElementById("task-list");
+
+      loginform$.style.display = "none";
+
+      //login form
+      loginform$.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (user1$.value === "" && userPassword$.value === "") {
+          alert(
+            "You don't enter your name and password in input field, Please enter your name and password in input field."
+          );
+        } else if (user1$.value !== "admin") {
+          alert(
+            "Your Name and password is not admin. kindly enter admin in both input fields."
+          );
+        } else if (userPassword$.value !== "admin") {
+          alert(
+            "Your Name and password is not admin. kindly enter admin in both input fields."
+          );
+        } else if (
+          user1$.value === "admin" &&
+          userPassword$.value === "admin"
+        ) {
+          todoform$.style.display = "block";
+          loginform$.style.display = "none";
+          userInput$.innerText = "Welcome Mr. " + user1$.value;
+        }
+      });
+
+      //todoform
+      todoform$.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (user2$.value === "") {
+          alert("Please enter the names of games.");
+        } else {
+          let list = document.createElement("li");
+          taskList.appendChild(list);
+          let span = document.createElement("span");
+          taskList.appendChild(span);
+          span.innerText = user2$.value;
+
+          list.innerHTML =
+            "<button class='edit' >Edit</button> " +
+            "<button class='del' >Delete</button> ";
+          let remove = list.querySelector(".del");
+
+          remove.addEventListener("click", function () {
+            list.remove();
+            span.remove();
+          });
+
+          let edit = list.querySelector(".edit");
+          edit.addEventListener("click", function () {
+            let newtext = taskList.querySelector("span").innerText;
+            console.log(newtext);
+            newtext = user2$.innerText;
+          });
+
+          user2$.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
